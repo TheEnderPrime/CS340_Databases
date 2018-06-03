@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Countryside | Owners</title>
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="http://cdn.ckeditor.com/4.6.1/standard/ckeditor.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"
+    />
+</head>
+
+<body onload="buildTables(), getDogs()">
+
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+                    aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">Countryside Pet Resort & Spa</a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="index.html">Home</a>
+                    </li>
+                    <li>
+                        <a href="pets.html">Pets</a>
+                    </li>
+                    <li>
+                        <a href="employees.html">Employees</a>
+                    </li>
+                    <li>
+                        <a href="entries.html">Entries</a>
+                    </li>
+                    <li class="active">
+                        <a href="activities.html">Activities</a>
+                    </li>
+                    <li>
+                        <a href="about.html">About</a>
+                    </li>
+                </ul>
+                <!-- <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Welcome, David</a></li>
+            <li><a href="login.html">Logout</a></li>
+          </ul> -->
+            </div>
+            <!--/.nav-collapse -->
+        </div>
+    </nav>
+
+    <header id="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10">
+                    <h1>
+                        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Activities
+                        <small>Manage Activities</small>
+                    </h1>
+                </div>
+                <div class="col-md-2">
+                    <div class="dropdown create">
+                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="true">
+                            Add
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <li>
+                                <a type="button" data-toggle="modal" data-target="#addDogEntry">Am Activity</a>
+                            </li>
+                            <li>
+                                <a type="button" data-toggle="modal" data-target="#addCatEntry">Pm Activity</a>
+                            </li>
+                            <li>
+                                <a href="#">temp2</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="main">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="list-group">
+                        <a href="index.html" class="list-group-item active main-color-bg">
+                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Dashboard
+                        </a>
+                        <a href="pets.html" class="list-group-item">
+                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Pets
+                            <span class="badge">12</span>
+                        </a>
+                        <a href="employees.html" class="list-group-item">
+                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Employees
+                            <span class="badge">33</span>
+                        </a>
+                        <a href="entries.html" class="list-group-item">
+                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Entries
+                            <span class="badge">33</span>
+                        </a>
+                        <a href="activities.html" class="list-group-item">
+                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Activities
+                            <span class="badge">33</span>
+                        </a>
+                        <a href="about.html" class="list-group-item">
+                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span> About </a>
+                    </div>
+
+                    <div class="well">
+                        <h4>Hotel Space Used</h4>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+                                60%
+                            </div>
+                        </div>
+                        <h4>Employees Busy </h4>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+                                40%
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <!-- Website Overview -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading main-color-bg">
+                            <h3 class="panel-title">Activities</h3>
+                        </div>
+                        <div class="panel-body">
+                            <h3>AM Activities</h3>
+                            <table id="AmActivityList" class="table table-striped table-hover">
+                            </table>
+                            <h3>PM Activities</h3>
+                            <table id="PmActivityList" class="table table-striped table-hover">
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="footer">
+        <p>Copyright Doggo Inc, &copy; 2018</p>
+    </footer>
+
+    <!-- Modals -->
+
+    <div class="modal fade" id="addDogEntry" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form id="addDogEntryForm">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">Update Pet</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Date</label>
+                            <input type="text" value="" name="entryDate" id="entryDate" readonly="readonly" class="form-control clsDatePicker">
+                        </div>
+                        <div class="form-group">
+                            <label>Package</label>
+                            <input type="text" class="form-control" value="" name="package" id="package">
+                        </div>
+                        <div class="form-group">
+                            <label>Extras</label>
+                            <input type="text" class="form-control" value="" name="extras" id="extras">
+                        </div>
+                        <div class="form-group">
+                            <label>Dog</label>
+                            <select class="form-control" id="selectDog">
+                            </select>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <!-- <button type="submit" class="btn btn-primary">Add Pet</button> -->
+                <button type="submit" onClick="createDogEntry(this.form)" class="btn btn-primary">Create Entry</button>
+            </div>
+            </form>
+        </div>
+    </div>
+
+
+
+
+
+    <script>
+        var myobject = {
+        };
+
+
+        $('#entryDate').datepicker({
+            dateFormat: 'yy-m-d',
+            inline: true,
+            onSelect: function (dateText, inst) {
+                var date = $(this).datepicker('getDate'),
+                    day = date.getDate(),
+                    month = date.getMonth() + 1,
+                    year = date.getFullYear();
+                alert(day + '-' + month + '-' + year);
+            }
+        });
+
+
+        function getDogs() {
+            var dogs = {};
+            fetch('http://web.engr.oregonstate.edu/~kokeshs/CatDog/CatDog.php?f=getDog', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                }
+            }).then(function (res) {
+                res.json().then(function (data) {
+                    myList = data.DogList;
+                    for (var i = 0; i < myList.length; i++) {
+                        var rowHash = myList[i];
+                        var obj = { [rowHash.ID]: rowHash.name };
+                        $.extend(myobject, obj);
+                    }
+
+                    var select = document.getElementById("selectDog");
+
+                    for (index in myobject) {
+                        select.options[select.options.length] = new Option(myobject[index], index);
+                    }
+                });
+            });
+
+        }
+
+        function buildTables() {
+            getPmActivity();
+            getAmActivity();
+
+            function addAllColumnHeadersPM(myList) {
+                var columnSet = [];
+                var headerTr$ = $('<tr/>');
+
+                for (var i = 0; i < myList.length; i++) {
+                    var rowHash = myList[i];
+                    for (var key in rowHash) {
+                        if ($.inArray(key, columnSet) == -1) {
+                            columnSet.push(key);
+                            headerTr$.append($('<th/>').html(key));
+                        }
+                    }
+                }
+                headerTr$.append($('<th/>'));
+                $("#PmActivityList").append(headerTr$);
+
+                return columnSet;
+            }
+
+            function addAllColumnHeadersAM(myList) {
+                var columnSet = [];
+                var headerTr$ = $('<tr/>');
+
+                for (var i = 0; i < myList.length; i++) {
+                    var rowHash = myList[i];
+                    for (var key in rowHash) {
+                        if ($.inArray(key, columnSet) == -1) {
+                            columnSet.push(key);
+                            headerTr$.append($('<th/>').html(key));
+                        }
+                    }
+                }
+                headerTr$.append($('<th/>'));
+                $("#AmActivityList").append(headerTr$);
+
+                return columnSet;
+            }
+
+            function getPmActivity() {
+                fetch('http://web.engr.oregonstate.edu/~kokeshs/CatDog/CatDog.php?f=getPmActivity', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    }
+                }).then(function (res) {
+                    res.json().then(function (data) {
+                        myList = data.PmActivityList;
+
+                        var columns = addAllColumnHeadersPM(myList);
+
+                        for (var i = 0; i < myList.length; i++) {
+                            var row$ = $('<tr/>');
+                            // var firstname;
+                            // var lastname;
+                            // var employeeid;
+                            for (var colIndex = 0; colIndex < columns.length; colIndex++) {
+                                var cellValue = myList[i][columns[colIndex]];
+
+                                if (cellValue == null) { cellValue = ""; }
+                                row$.append($('<td/>').html(cellValue));
+                            }
+                            //row$.append($('<a class="btn btn-default open-updateAnimal" data-toggle="modal" data-firstname="' + firstname + '" data-lastname="' + lastname + '" data-employeeid="' + employeeid + '" href="#updateEmployee" >Edit</a> <a class="btn btn-danger" href="#">Delete</a>'));
+                            $("#PmActivityList").append(row$);
+                        }
+                    });
+                });
+            }
+            function getAmActivity() {
+                fetch('http://web.engr.oregonstate.edu/~kokeshs/CatDog/CatDog.php?f=getAmActivity', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    }
+                }).then(function (res) {
+                    res.json().then(function (data) {
+                        myList = data.AmActivityList;
+
+                        var columns = addAllColumnHeadersAM(myList);
+
+                        for (var i = 0; i < myList.length; i++) {
+                            var row$ = $('<tr/>');
+                            // var firstname;
+                            // var lastname;
+                            // var employeeid;
+                            for (var colIndex = 0; colIndex < columns.length; colIndex++) {
+                                var cellValue = myList[i][columns[colIndex]];
+
+                                if (cellValue == null) { cellValue = ""; }
+                                row$.append($('<td/>').html(cellValue));
+                            }
+                            //row$.append($('<a class="btn btn-default open-updateAnimal" data-toggle="modal" data-firstname="' + firstname + '" data-lastname="' + lastname + '" data-employeeid="' + employeeid + '" href="#updateEmployee" >Edit</a> <a class="btn btn-danger" href="#">Delete</a>'));
+                            $("#AmActivityList").append(row$);
+                        }
+                    });
+                });
+            }
+        }
+
+        // function createDogEntry(form) {
+        //     var date = form.entryDate.value;
+        //     var newdate = new Date(date);
+        //     var dogId = form.selectDog.value;
+        //     var package = form.package.value;
+        //     var extras = form.extras.value;
+        //     fetch('http://web.engr.oregonstate.edu/~kokeshs/CatDog/CatDog.php?f=createDogGuestListEntry', {
+        //         method: 'POST',
+        //         headers: {
+        //             'Accept': 'application/json',
+        //             'Content-Type': 'application/json',
+        //         },
+        //         body: JSON.stringify({
+        //             Date: newdate,
+        //             Package: package,
+        //             Extras: extras,
+        //             dogId: dogId,
+        //         })
+        //     }).then(function (res) {
+        //         res.json().then(function (data) {
+        //             if (data.isValid = "valid") {
+        //                 alert("Dog: " + data.name + " added to Database");
+        //             } else {
+        //                 alert("Could not add Dog to Database");
+        //             }
+        //         });
+        //     });
+        // }
+
+    </script>
+
+
+    <script>
+        CKEDITOR.replace('editor1');
+    </script>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+</body>
+
+</html>

@@ -1,238 +1,296 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Countryside | Home</title>
-    <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
-    <script src="http://cdn.ckeditor.com/4.6.1/standard/ckeditor.js"></script>
-  </head>
-  <body>
 
-    <nav class="navbar navbar-default">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="index.html">Countryside Pet Resort & Spa</a>
-        </div>
-        <div id="navbar" class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="index.html">Home</a></li>
-            <li><a href="pets.html">Pets</a></li>
-            <li><a href="employees.html">Employees</a></li>
-            <li><a href="owners.html">Owners</a></li>
-            <li><a href="about.html">About</a></li>
-          </ul>
-          <!-- <ul class="nav navbar-nav navbar-right">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Countryside | Home</title>
+  <!-- Bootstrap core CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <script src="http://cdn.ckeditor.com/4.6.1/standard/ckeditor.js"></script>
+</head>
+
+<body onload="buildTables()">
+
+  <nav class="navbar navbar-default">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+          aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html">Countryside Pet Resort & Spa</a>
+      </div>
+      <div id="navbar" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li class="active">
+            <a href="index.html">Home</a>
+          </li>
+          <li>
+            <a href="pets.html">Pets</a>
+          </li>
+          <li>
+            <a href="employees.html">Employees</a>
+          </li>
+          <li>
+            <a href="entries.html">Entries</a>
+          </li>
+          <li>
+              <a href="activities.html">Activities</a>
+          </li>
+          <li>
+            <a href="about.html">About</a>
+          </li>
+        </ul>
+        <!-- <ul class="nav navbar-nav navbar-right">
             <li><a href="#">Welcome, David</a></li>
             <li><a href="login.html">Logout</a></li>
           </ul> -->
-        </div><!--/.nav-collapse -->
       </div>
-    </nav>
+      <!--/.nav-collapse -->
+    </div>
+  </nav>
 
-    <header id="header">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-10">
-            <h1><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Home <small>Manage Your Doggos</small></h1>
-          </div>
-          <div class="col-md-2">
-            <div class="dropdown create">
-              <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                Create Content
-                <span class="caret"></span>
-              </button>
-              <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                <li><a type="button" data-toggle="modal" data-target="#addPage">Add Pet</a></li>
-                <li><a href="#">Add Employee</a></li>
-                <li><a href="#">Add Owners</a></li>
-              </ul>
-            </div>
-          </div>
+  <header id="header">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-10">
+          <h1>
+            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Home
+            <small>Manage Your Doggos</small>
+          </h1>
         </div>
       </div>
-    </header>
+    </div>
+  </header>
 
-    <section id="breadcrumb">
-      <div class="container">
-        <ol class="breadcrumb">
-          <li class="active">Home</li>
-        </ol>
-      </div>
-    </section>
+  <section id="main">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="list-group">
+            <a href="index.html" class="list-group-item active main-color-bg">
+              <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Dashboard
+            </a>
+            <a href="pets.html" class="list-group-item">
+              <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Pets
+              <span class="badge">12</span>
+            </a>
+            <a href="employees.html" class="list-group-item">
+              <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Employees
+              <span class="badge">33</span>
+            </a>
+            <a href="entries.html" class="list-group-item">
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Entries
+                <span class="badge">33</span>
+            </a>
+            <a href="activities.html" class="list-group-item">
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Activities
+                <span class="badge">33</span>
+            </a>
+            <a href="about.html" class="list-group-item">
+              <span class="glyphicon glyphicon-user" aria-hidden="true"></span> About </a>
+          </div>
 
-    <section id="main">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-3">
-            <div class="list-group">
-              <a href="index.html" class="list-group-item active main-color-bg">
-                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Dashboard
-              </a>
-              <a href="pets.html" class="list-group-item"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Pets <span class="badge">12</span></a>
-              <a href="employees.html" class="list-group-item"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Employees <span class="badge">33</span></a>
-              <a href="owners.html" class="list-group-item"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Owners <span class="badge">203</span></a>
-              <a href="about.html" class="list-group-item"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> About </a>
-            </div>
-
-            <div class="well">
-              <h4>Hotel Space Used</h4>
-              <div class="progress">
-                  <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-                      60%
+          <div class="well">
+            <h4>Hotel Space Used</h4>
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+                60%
               </div>
             </div>
             <h4>Employees Busy </h4>
             <div class="progress">
-                <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
-                    40%
+              <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+                40%
+              </div>
             </div>
           </div>
+        </div>
+        <div class="col-md-9">
+          <!-- Website Overview -->
+          <div class="panel panel-default">
+            <div class="panel-heading main-color-bg">
+              <h3 class="panel-title">Website Overview</h3>
+            </div>
+            <div class="panel-body">
+              <div class="col-md-3">
+                <div class="well dash-box">
+                  <h2>
+                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span> 203</h2>
+                  <h4>Owners</h4>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="well dash-box">
+                  <h2>
+                    <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> 12</h2>
+                  <h4>Pets</h4>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="well dash-box">
+                  <h2>
+                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> 33</h2>
+                  <h4>Employees</h4>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="well dash-box">
+                  <h2>
+                    <span class="glyphicon glyphicon-stats" aria-hidden="true"></span> 12,334</h2>
+                  <h4>All Time Customers</h4>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="col-md-9">
-            <!-- Website Overview -->
-            <div class="panel panel-default">
-              <div class="panel-heading main-color-bg">
-                <h3 class="panel-title">Website Overview</h3>
-              </div>
-              <div class="panel-body">
-                <div class="col-md-3">
-                  <div class="well dash-box">
-                    <h2><span class="glyphicon glyphicon-user" aria-hidden="true"></span> 203</h2>
-                    <h4>Owners</h4>
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="well dash-box">
-                    <h2><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> 12</h2>
-                    <h4>Pets</h4>
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="well dash-box">
-                    <h2><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> 33</h2>
-                    <h4>Employees</h4>
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="well dash-box">
-                    <h2><span class="glyphicon glyphicon-stats" aria-hidden="true"></span> 12,334</h2>
-                    <h4>All Time Customers</h4>
-                  </div>
-                </div>
-              </div>
-              </div>
 
-              <!-- Latest Users -->
-              <div class="panel panel-default">
-                <div class="panel-heading">
-                  <h3 class="panel-title">Current Employees</h3>
-                </div>
-                <div class="panel-body">
-                  <table class="table table-striped table-hover">
-                      <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Joined</th>
-                      </tr>
-                      <tr>
-                        <td>Jill Smith</td>
-                        <td>jillsmith@gmail.com</td>
-                        <td>Dec 12, 2016</td>
-                      </tr>
-                      <tr>
-                        <td>Eve Jackson</td>
-                        <td>ejackson@yahoo.com</td>
-                        <td>Dec 13, 2016</td>
-                      </tr>
-                      <tr>
-                        <td>John Doe</td>
-                        <td>jdoe@gmail.com</td>
-                        <td>Dec 13, 2016</td>
-                      </tr>
-                      <tr>
-                        <td>Stephanie Landon</td>
-                        <td>landon@yahoo.com</td>
-                        <td>Dec 14, 2016</td>
-                      </tr>
-                      <tr>
-                        <td>Mike Johnson</td>
-                        <td>mjohnson@gmail.com</td>
-                        <td>Dec 15, 2016</td>
-                      </tr>
-                    </table>
-                </div>
-              </div>
+          <!-- Latest Users -->
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Current Employees</h3>
+            </div>
+            <div class="panel-body">
+              <table id="employeeList" class="table table-striped table-hover">
+              </table>
+            </div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <footer id="footer">
-      <p>Copyright Doggo Inc, &copy; 2018</p>
-    </footer>
+  <footer id="footer">
+    <p>Copyright Doggo Inc, &copy; 2018</p>
+  </footer>
 
-    <!-- Modals -->
+  <!-- Modals -->
 
-    <!-- Add Page -->
-    <div class="modal fade" id="addPage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <form>
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Add Page</h4>
+  <!-- Add Employees -->
+  <div class="modal fade" id="addEmployee" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <form id="updateEmployeeForm">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title" id="myModalLabel">Add Employee</h4>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label>First Name</label>
+              <input type="text" class="form-control" placeholder="First Name" name="FirstName" id="FirstName">
+            </div>
+            <div class="form-group">
+              <label>Last Name</label>
+              <input type="text" class="form-control" placeholder="Last Name" name="LastName" id="LastName">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <!-- <button type="submit" class="btn btn-primary">Add Pet</button> -->
+            <button type="submit" onClick="addEmployee(this.form)" class="btn btn-primary">Update Pet</button>
+          </div>
+        </form>
       </div>
-      <div class="modal-body">
-        <div class="form-group">
-          <label>Page Title</label>
-          <input type="text" class="form-control" placeholder="Page Title">
-        </div>
-        <div class="form-group">
-          <label>Page Body</label>
-          <textarea name="editor1" class="form-control" placeholder="Page Body"></textarea>
-        </div>
-        <div class="checkbox">
-          <label>
-            <input type="checkbox"> Published
-          </label>
-        </div>
-        <div class="form-group">
-          <label>Meta Tags</label>
-          <input type="text" class="form-control" placeholder="Add Some Tags...">
-        </div>
-        <div class="form-group">
-          <label>Meta Description</label>
-          <input type="text" class="form-control" placeholder="Add Meta Description...">
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Save changes</button>
-      </div>
-    </form>
     </div>
   </div>
-</div>
+
+  <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
 
   <script>
-     CKEDITOR.replace( 'editor1' );
- </script>
 
-    <!-- Bootstrap core JavaScript
+    function buildTables() {
+      getEmployees();
+
+      function addAllColumnHeaders(myList) {
+        var columnSet = [];
+        var headerTr$ = $('<tr/>');
+
+        for (var i = 0; i < myList.length; i++) {
+          var rowHash = myList[i];
+          for (var key in rowHash) {
+            if ($.inArray(key, columnSet) == -1) {
+              columnSet.push(key);
+              if (key == "EmployeeId" || key == "TotalHours") {
+                headerTr$.append($('<style = "display:none;" th/>').html(key));
+              }
+              else {
+                headerTr$.append($('<th/>').html(key));
+              }
+            }
+          }
+        }
+        headerTr$.append($('<th/>'));
+        $("#employeeList").append(headerTr$);
+
+        return columnSet;
+      }
+
+      function getEmployees() {
+        var temp = 0;
+        fetch('http://web.engr.oregonstate.edu/~kokeshs/CatDog/CatDog.php?f=getEmployee', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          }
+        }).then(function (res) {
+          res.json().then(function (data) {
+            myList = data.EmployeeList;
+
+            var columns = addAllColumnHeaders(myList);
+
+            for (var i = 0; i < myList.length; i++) {
+              var row$ = $('<tr/>');
+              var firstname;
+              var lastname;
+              var employeeid;
+              for (var colIndex = 0; colIndex < columns.length; colIndex++) {
+                var cellValue = myList[i][columns[colIndex]];
+
+                if (cellValue == null) { cellValue = ""; }
+                if (colIndex == 0) {
+                  firstname = myList[i][columns[colIndex]];
+                  row$.append($('<td/>').html(cellValue));
+                }
+                if (colIndex == 1) {
+                  lastname = myList[i][columns[colIndex]];
+                  row$.append($('<td/>').html(cellValue));
+                }
+                if (colIndex == 2) {
+                  employeeid = myList[i][columns[colIndex]];
+                  row$.append($('<style = "display:none;" td/>').html(cellValue));
+                }
+                if (colIndex == 3) {
+                  row$.append($('<style = "display:none;" td/>').html(cellValue));
+                }
+              }
+              //row$.append($('<a class="btn btn-default open-updateAnimal" data-toggle="modal" data-firstname="' + firstname + '" data-lastname="' + lastname + '" data-employeeid="' + employeeid + '" href="#updateEmployee" >Edit</a> <a class="btn btn-danger" href="#">Delete</a>'));
+              $("#employeeList").append(row$);
+            }
+          });
+        });
+      }
+    }
+
+  </script>
+
+  <!-- <script>
+    CKEDITOR.replace('editor1');
+  </script> -->
+
+  <!-- Bootstrap core JavaScript
     ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-  </body>
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+</body>
+
 </html>

@@ -5,14 +5,18 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Countryside | Employees</title>
+  <title>Countryside | Owners</title>
   <!-- Bootstrap core CSS -->
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/style.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
   <script src="http://cdn.ckeditor.com/4.6.1/standard/ckeditor.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"
+  />
 </head>
 
-<body onload="buildTables()">
+<body onload="buildTables(), getDogs()">
 
   <nav class="navbar navbar-default">
     <div class="container">
@@ -34,10 +38,10 @@
           <li>
             <a href="pets.html">Pets</a>
           </li>
-          <li class="active">
+          <li>
             <a href="employees.html">Employees</a>
           </li>
-          <li>
+          <li class="active">
             <a href="entries.html">Entries</a>
           </li>
           <li>
@@ -47,7 +51,12 @@
             <a href="about.html">About</a>
           </li>
         </ul>
+        <!-- <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Welcome, David</a></li>
+            <li><a href="login.html">Logout</a></li>
+          </ul> -->
       </div>
+      <!--/.nav-collapse -->
     </div>
   </nav>
 
@@ -56,26 +65,26 @@
       <div class="row">
         <div class="col-md-10">
           <h1>
-            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Employees
-            <small>Manage Employees</small>
+            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Entries
+            <small>Manage Entries</small>
           </h1>
         </div>
         <div class="col-md-2">
           <div class="dropdown create">
             <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
               aria-expanded="true">
-              Add Employee
+              Add
               <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
               <li>
-                <a href="#">Add Employee</a>
+                <a type="button" data-toggle="modal" data-target="#addDogEntry">Dog Entry</a>
               </li>
               <li>
-                <a href="#">temp 1</a>
+                <a type="button" data-toggle="modal" data-target="#addCatEntry">Cat Entry</a>
               </li>
               <li>
-                <a href="#">temp 2</a>
+                <a href="#">temp2</a>
               </li>
             </ul>
           </div>
@@ -131,13 +140,15 @@
           <!-- Website Overview -->
           <div class="panel panel-default">
             <div class="panel-heading main-color-bg">
-              <h3 class="panel-title">Employees</h3>
+              <h3 class="panel-title">Entries</h3>
             </div>
             <div class="panel-body">
-              <table id="employeeList" class="table table-striped table-hover">
+              <h3>Dog Entries</h3>
+              <table id="dogEntryList" class="table table-striped table-hover">
               </table>
             </div>
           </div>
+
         </div>
       </div>
     </div>
@@ -147,60 +158,98 @@
     <p>Copyright Doggo Inc, &copy; 2018</p>
   </footer>
 
-  <div class="modal fade" id="updateEmployee" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <!-- Modals -->
+
+  <div class="modal fade" id="addDogEntry" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
-        <form id="updateEmployeeForm">
+        <form id="addDogEntryForm">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
-            <h4 class="modal-title" id="myModalLabel">Update Employee</h4>
+            <h4 class="modal-title" id="myModalLabel">Update Pet</h4>
           </div>
           <div class="modal-body">
             <div class="form-group">
-              <label>First Name</label>
-              <input type="text" class="form-control" value="" name="FirstName" id="FirstName">
+              <label>Date</label>
+              <input type="text" value="" name="entryDate" id="entryDate" readonly="readonly" class="form-control clsDatePicker">
             </div>
             <div class="form-group">
-              <label>Last Name</label>
-              <input type="text" class="form-control" value="" name="LastName" id="LastName">
+              <label>Package</label>
+              <input type="text" class="form-control" value="" name="package" id="package">
             </div>
-            <div class="form-group hidden">
-              <label>Employee ID</label>
-              <input type="text" class="form-control" value="" name="EmployeeID" id="EmployeeID">
+            <div class="form-group">
+              <label>Extras</label>
+              <input type="text" class="form-control" value="" name="extras" id="extras">
+            </div>
+            <div class="form-group">
+              <label>Dog</label>
+              <select class="form-control" id="selectDog">
+              </select>
             </div>
           </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         <!-- <button type="submit" class="btn btn-primary">Add Pet</button> -->
-        <button type="submit" onClick="updateEmployee(this.form)" class="btn btn-primary">Update Pet</button>
+        <button type="submit" onClick="createDogEntry(this.form)" class="btn btn-primary">Create Entry</button>
       </div>
       </form>
     </div>
   </div>
 
-  <!-- Modals -->
 
-  <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+
+
 
   <script>
+    var myobject = {
+    };
 
 
-    $(document).ready(function () {
-      $("#updateEmployee").on('show.bs.modal', function (e) {
-        var FirstName = $(e.relatedTarget).data('firstname');
-        var LastName = $(e.relatedTarget).data('lastname');
-        var EmployeeID = $(e.relatedTarget).data('employeeid');
-        $(e.currentTarget).find('input[name="FirstName"]').val(FirstName);
-        $(e.currentTarget).find('input[name="LastName"]').val(LastName);
-        $(e.currentTarget).find('input[name="EmployeeID"]').val(EmployeeID);
-      });
+    $('#entryDate').datepicker({
+      dateFormat: 'yy-m-d',
+      inline: true,
+      onSelect: function (dateText, inst) {
+        var date = $(this).datepicker('getDate'),
+          day = date.getDate(),
+          month = date.getMonth() + 1,
+          year = date.getFullYear();
+        alert(day + '-' + month + '-' + year);
+      }
     });
 
+
+    function getDogs() {
+      var dogs = {};
+      fetch('http://web.engr.oregonstate.edu/~kokeshs/CatDog/CatDog.php?f=getDog', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }
+      }).then(function (res) {
+        res.json().then(function (data) {
+          myList = data.DogList;
+          for (var i = 0; i < myList.length; i++) {
+            var rowHash = myList[i];
+            var obj = { [rowHash.ID]: rowHash.name };
+            $.extend(myobject, obj);
+          }
+
+          var select = document.getElementById("selectDog");
+
+          for (index in myobject) {
+            select.options[select.options.length] = new Option(myobject[index], index);
+          }
+        });
+      });
+
+    }
+
     function buildTables() {
-      getEmployees();
+      getDogEntries();
 
       function addAllColumnHeaders(myList) {
         var columnSet = [];
@@ -211,24 +260,19 @@
           for (var key in rowHash) {
             if ($.inArray(key, columnSet) == -1) {
               columnSet.push(key);
-              if (key == "EmployeeId") {
-                headerTr$.append($('<style = "display:none;" th/>').html(key));
-              }
-              else {
-                headerTr$.append($('<th/>').html(key));
-              }
+              headerTr$.append($('<th/>').html(key));
             }
           }
         }
         headerTr$.append($('<th/>'));
-        $("#employeeList").append(headerTr$);
+        $("#dogEntryList").append(headerTr$);
 
         return columnSet;
       }
 
-      function getEmployees() {
+      function getDogEntries() {
         var temp = 0;
-        fetch('http://web.engr.oregonstate.edu/~kokeshs/CatDog/CatDog.php?f=getEmployee', {
+        fetch('http://web.engr.oregonstate.edu/~kokeshs/CatDog/CatDog.php?f=getDogGuestListEntry', {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
@@ -236,76 +280,64 @@
           }
         }).then(function (res) {
           res.json().then(function (data) {
-            myList = data.EmployeeList;
+            myList = data.dogEntryList;
 
             var columns = addAllColumnHeaders(myList);
 
             for (var i = 0; i < myList.length; i++) {
               var row$ = $('<tr/>');
-              var firstname;
-              var lastname;
-              var employeeid;
+              // var firstname;
+              // var lastname;
+              // var employeeid;
               for (var colIndex = 0; colIndex < columns.length; colIndex++) {
                 var cellValue = myList[i][columns[colIndex]];
 
                 if (cellValue == null) { cellValue = ""; }
-                if (colIndex == 0) {
-                  firstname = myList[i][columns[colIndex]];
-                  row$.append($('<td/>').html(cellValue));
-                }
-                if (colIndex == 1) {
-                  lastname = myList[i][columns[colIndex]];
-                  row$.append($('<td/>').html(cellValue));
-                }
-                if (colIndex == 2) {
-                  employeeid = myList[i][columns[colIndex]];
-                  row$.append($('<style = "display:none;" td/>').html(cellValue));
-                }
-                if (colIndex == 3) {
-                  row$.append($('<td/>').html(cellValue));
-                }
+                row$.append($('<td/>').html(cellValue));
               }
-              row$.append($('<a class="btn btn-default open-updateAnimal" data-toggle="modal" data-firstname="' + firstname + '" data-lastname="' + lastname + '" data-employeeid="' + employeeid + '" href="#updateEmployee" >Edit</a> <a class="btn btn-danger" href="#">Delete</a>'));
-              $("#employeeList").append(row$);
+              //row$.append($('<a class="btn btn-default open-updateAnimal" data-toggle="modal" data-firstname="' + firstname + '" data-lastname="' + lastname + '" data-employeeid="' + employeeid + '" href="#updateEmployee" >Edit</a> <a class="btn btn-danger" href="#">Delete</a>'));
+              $("#dogEntryList").append(row$);
             }
           });
         });
       }
     }
 
-    function updateEmployee(form) {
-      var firstName = form.FirstName.value;
-      var lastName = form.LastName.value;
-      var employeeId = form.EmployeeID.value;
-      fetch('http://web.engr.oregonstate.edu/~kokeshs/CatDog/CatDog.php?f=updateEmployee', {
+    function createDogEntry(form) {
+      var date = form.entryDate.value;
+      var newdate = new Date(date);
+      var dogId = form.selectDog.value;
+      var package = form.package.value;
+      var extras = form.extras.value;
+      fetch('http://web.engr.oregonstate.edu/~kokeshs/CatDog/CatDog.php?f=createDogGuestListEntry', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          FirstName: firstName,
-          LastName: lastName,
-          EmployeeID: employeeId
+          Date: newdate,
+          Package: package,
+          Extras: extras,
+          dogId: dogId,
         })
       }).then(function (res) {
         res.json().then(function (data) {
           if (data.isValid = "valid") {
-            alert("Dog: " + petName + " updated");
+            alert("Dog: " + data.name + " added to Database");
           } else {
-            alert("Could not update this dog");
+            alert("Could not add Dog to Database");
           }
         });
       });
     }
 
-
   </script>
+
 
   <script>
     CKEDITOR.replace('editor1');
   </script>
-
   <!-- Bootstrap core JavaScript
     ================================================== -->
   <!-- Placed at the end of the document so the pages load faster -->
