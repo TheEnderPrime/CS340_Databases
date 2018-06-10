@@ -186,18 +186,19 @@ if(function_exists($_GET['f'])) {
         $json = file_get_contents('php://input');
         $obj = json_decode($json,true);
 
-        $ID = $obj['ID'];
+        $name = $obj['Name'];
+        $ownerId = $obj['OwnerId'];
 
         $returned->isValid = 'valid';
-        $sql = "SELECT * FROM `Dog` WHERE ID = ?";
+        $sql = "SELECT * FROM `Dog` WHERE Name = ? AND OwnerId = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param('i', $ID);
+        $stmt->bind_param('si', $name, $ownerId);
         $stmt->execute();
-        $stmt->bind_result($Name, $OwnerId, $ID);
+        $stmt->bind_result($Name, $OwnerId, $EntryID);
         $stmt->store_result();
         $returned->DogList = array();
         while($stmt->fetch()){
-            $temp = array('name'=>$Name, 'ownerID'=>$OwnerId, 'ID'=>$ID);
+            $temp = array('name'=>$Name, 'OwnerId'=>$OwnerId, 'EntryID'=>$EntryID);
             array_push($returned->DogList, $temp);
         }
         $stmt->close();
@@ -219,11 +220,11 @@ if(function_exists($_GET['f'])) {
         $sql = "SELECT * FROM `Dog`";
         $stmt = $conn->prepare($sql);
         $stmt->execute();
-        $stmt->bind_result($Name, $OwnerId, $ID);
+        $stmt->bind_result($Name, $OwnerId, $EntryID);
         $stmt->store_result();
         $returned->DogList = array();
         while($stmt->fetch()){
-            $temp = array('name'=>$Name, 'ownerID'=>$OwnerId, 'ID'=>$ID);
+            $temp = array('name'=>$Name, 'OwnerId'=>$OwnerId, 'EntryID'=>$EntryID);
             array_push($returned->DogList, $temp);
         }
         $stmt->close();
@@ -242,7 +243,7 @@ if(function_exists($_GET['f'])) {
         $obj = json_decode($json,true);
         
         $name = $obj['Name'];
-        $ownerId = $obj['OwnerID'];
+        $ownerId = $obj['OwnerId'];
 
         $returned->isValid = 'valid';
         $returned->name = $name;
@@ -267,16 +268,36 @@ if(function_exists($_GET['f'])) {
         $json = file_get_contents('php://input');
         $obj = json_decode($json,true);
 
-        $ID = $obj['ID'];
-        $newName = $obj['Name'];
-        $newOwnerId = $obj['OwnerID'];
+        $name = $obj['Name'];
+        $ownerId = $obj['OwnerId'];
+        $newName = $obj['NewName'];
+        $newOwnerId = $obj['NewOwnerId'];
 
-        $returned->isValid = "valid";
-        $sql2 = "UPDATE `Dog` SET Name=?,OwnerId=? WHERE ID = ? ";
-        $stmt2 = $conn->prepare($sql2);
-        $stmt2->bind_param('sii',$newName, $newOwnerId, $ID);
-        $stmt2->execute();
-        $stmt2->close();
+        $returned->isValid = 'valid';
+        $sql = "SELECT * FROM `Dog` WHERE Name = ? AND OwnerId = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('si', $newName, $newOwnerId);
+        $stmt->execute();
+        $stmt->bind_result($Name, $OwnerId, $EntryID);
+        $stmt->store_result();
+        $returned->DogList = array();
+        while($stmt->fetch()){
+            $temp = array('name'=>$Name, 'OwnerId'=>$OwnerId, 'EntryID'=>$EntryID);
+            array_push($returned->DogList, $temp);
+        }
+        $stmt->close();
+
+        if(empty($returned->DogList)){
+            $returned->isValid = "valid";
+            $sql2 = "UPDATE `Dog` SET Name=?,OwnerId=? WHERE Name = ? AND OwnerId = ?";
+            $stmt2 = $conn->prepare($sql2);
+            $stmt2->bind_param('sisi',$newName, $newOwnerId, $name, $ownerId);
+            $stmt2->execute();
+            $stmt2->close();
+        }
+        else{
+            $returned->isValid = "notValid";
+        }
         echo json_encode($returned);
     }
     /**
@@ -292,14 +313,13 @@ if(function_exists($_GET['f'])) {
         $json = file_get_contents('php://input');
         $obj = json_decode($json,true);
 
-        $name = $obj['ID'];
-
-        //search if dog with this id is in any of the DogGuestListEntry
+        $name = $obj['Name'];
+        $ownerId = $obj['OwnerId'];
 
         $returned->isValid = 'valid';
-        $sql = "DELETE FROM `Dog` WHERE ID = ?";
+        $sql = "DELETE FROM `Dog` WHERE Name = ? AND OwnerId = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param('i', $ID);
+        $stmt->bind_param('si', $name, $ownerId);
         $stmt->execute();
         $stmt->close();
 
@@ -389,27 +409,13 @@ if(function_exists($_GET['f'])) {
     }
     /**
      * update Employee entry
+     * 
+     * we dont allow for changing the employees name
+     * id get auto generated
+     * total hours gets auto counted
+     * 
      */
-    function updateEmployee(){
-        $conn = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-        if (!$conn) {
-            die('Could not connect: ' . mysqli_error());
-        }
-        $json = file_get_contents('php://input');
-        $obj = json_decode($json,true);
-
-        $newFirstName = $obj['FirstName'];
-        $newLastName = $obj['LastName'];
-        $EmployeeID = $obj['EmployeeID'];
-
-        $returned->isValid = "valid";
-        $sql2 = "UPDATE `Employee` SET `FirstName`=?,`LastName`=? WHERE `EmployeeID` = ?";
-        $stmt2 = $conn->prepare($sql2);
-        $stmt2->bind_param('ssi',$newFirstName, $newLastName, $EmployeeID);
-        $stmt2->execute();
-        $stmt2->close();
-        echo json_encode($returned);
-    }
+    
     /**
      * delete Employee from Employee id
      * 
@@ -576,27 +582,7 @@ if(function_exists($_GET['f'])) {
      * get all of the AmActivitys in the AmActivity table
      */
     function getAmActivity(){
-        $conn = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-        if (!$conn) {
-            die('Could not connect: ' . mysqli_error());
-        }
-        $json = file_get_contents('php://input');
-        $obj = json_decode($json,true);
 
-        $returned->isValid = 'valid';
-        $sql = "SELECT * FROM `AmActivity`";
-        $stmt = $conn->prepare($sql);
-        $stmt->execute();
-        $stmt->bind_result($EntryIDCat, $EntryIDDog, $EmployeeID, $Type, $Hours, $Date, $ActivityId);
-        $stmt->store_result();
-        $returned->AmActivityList = array();
-        while($stmt->fetch()){
-            $temp = array('EntryIDCat'=>$EntryIDCat, 'EntryIDDog'=>$EntryIDDog, 'EmployeeID'=>$EmployeeID, 'Type'=>$Type, 'Hours'=>$Hours, 'Date'=>$Date, 'ActivityId'=>$ActivityId);
-            array_push($returned->AmActivityList, $temp);
-        }
-        $stmt->close();
-
-        echo json_encode($returned);
     }
     /**
      * create a new AmActivity entry
@@ -628,53 +614,13 @@ if(function_exists($_GET['f'])) {
      * get all of the DogGuestListEntrys in the DogGuestListEntry table
      */
     function getDogGuestListEntry(){
-        $conn = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-        if (!$conn) {
-            die('Could not connect: ' . mysqli_error());
-        }
-        $json = file_get_contents('php://input');
-        $obj = json_decode($json,true);
 
-        $returned->isValid = 'valid';
-        $sql = "SELECT * FROM `DogGuestListEntry`";
-        $stmt = $conn->prepare($sql);
-        $stmt->execute();
-        $stmt->bind_result($EntryID, $HomeDate, $Package, $Extras, $DogIn);
-        $stmt->store_result();
-        $returned->dogEntryList = array();
-        while($stmt->fetch()){
-            $temp = array('EntryID'=>$EntryID, 'HomeDate'=>$HomeDate, 'Package'=>$Package,'Extras'=>$Extras,'DogIn'=>$DogIn);
-            array_push($returned->dogEntryList, $temp);
-        }
-        $stmt->close();
-
-        echo json_encode($returned);
     }
     /**
      * create a new DogGuestListEntry entry
      */
     function createDogGuestListEntry(){
-        $conn = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-        if (!$conn) {
-            die('Could not connect: ' . mysqli_error());
-        }
-        $json = file_get_contents('php://input');
-        $obj = json_decode($json,true);
-        
-        $Date = $obj['Date'];
-        $Package = $obj['Package'];
-        $Extras = $obj['Extras'];
-        $dogId = $obj['dogId'];
 
-        $returned->isValid = 'valid';
-        
-        $sql = 'INSERT INTO `DogGuestListEntry`(`HomeDate`, `Package`, `Extras`, `DogIn`) VALUES (?,?,?,?)';
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param('sssi', $Date, $Package, $Extras, intval($dogId));
-        $stmt->execute();
-        $stmt->close();
-
-        echo json_encode($returned);
     }
     /**
      * update DogGuestListEntry entry

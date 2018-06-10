@@ -16,7 +16,7 @@
   />
 </head>
 
-<body onload="buildTables(), getDogs()">
+<body onload="buildTables(), getDogs(), getCats()">
 
   <nav class="navbar navbar-default">
     <div class="container">
@@ -45,7 +45,7 @@
             <a href="entries.html">Entries</a>
           </li>
           <li>
-              <a href="activities.html">Activities</a>
+            <a href="activities.html">Activities</a>
           </li>
           <li>
             <a href="about.html">About</a>
@@ -83,9 +83,6 @@
               <li>
                 <a type="button" data-toggle="modal" data-target="#addCatEntry">Cat Entry</a>
               </li>
-              <li>
-                <a href="#">temp2</a>
-              </li>
             </ul>
           </div>
         </div>
@@ -114,8 +111,8 @@
               <span class="badge">33</span>
             </a>
             <a href="activities.html" class="list-group-item">
-                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Activities
-                <span class="badge">33</span>
+              <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Activities
+              <span class="badge">33</span>
             </a>
             <a href="about.html" class="list-group-item">
               <span class="glyphicon glyphicon-user" aria-hidden="true"></span> About </a>
@@ -145,6 +142,11 @@
             <div class="panel-body">
               <h3>Dog Entries</h3>
               <table id="dogEntryList" class="table table-striped table-hover">
+              </table>
+            </div>
+            <div class="panel-body">
+              <h3>Cat Entries</h3>
+              <table id="catEntryList" class="table table-striped table-hover">
               </table>
             </div>
           </div>
@@ -199,13 +201,159 @@
     </div>
   </div>
 
+  <div class="modal fade" id="addCatEntry" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <form id="addCatEntryForm">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title" id="myModalLabel">Update Pet</h4>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label>Date</label>
+              <input type="text" value="" name="entryDate2" id="entryDate2" readonly="readonly" class="form-control clsDatePicker">
+            </div>
+            <div class="form-group">
+              <label>Package</label>
+              <input type="text" class="form-control" value="" name="package" id="package">
+            </div>
+            <div class="form-group">
+              <label>Extras</label>
+              <input type="text" class="form-control" value="" name="extras" id="extras">
+            </div>
+            <div class="form-group">
+              <label>Cat</label>
+              <select class="form-control" id="selectCat">
+              </select>
+            </div>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <!-- <button type="submit" class="btn btn-primary">Add Pet</button> -->
+        <button type="submit" onClick="createCatEntry(this.form)" class="btn btn-primary">Create Entry</button>
+      </div>
+      </form>
+    </div>
+  </div>
 
+  <div class="modal fade" id="updateDogEntry" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <form id="updateDogEntryForm">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title" id="myModalLabel">Update Dog Entry</h4>
+          </div>
+          <div class="modal-body">
+            <div class="form-group hidden">
+              <label>EntryID</label>
+              <input type="text" class="form-control" value="" name="entryID" id="entryID">
+            </div>
+            <div class="form-group">
+              <label>HomeDate</label>
+              <input type="text" class="form-control" value="" name="homeDate2" id="homeDate" readonly="readonly" class="form-control clsDatePicker">
+            </div>
+            <div class="form-group">
+              <label>Package</label>
+              <input type="text" class="form-control" value="" name="package" id="package">
+            </div>
+            <div class="form-group">
+              <label>Extras</label>
+              <input type="text" class="form-control" value="" name="extras" id="extras">
+            </div>
+            <div class="form-group">
+              <label>DogIn</label>
+              <input type="text" class="form-control" value="" name="dogIn" id="dogIn">
+            </div>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <!-- <button type="submit" class="btn btn-primary">Add Pet</button> -->
+        <button type="submit" onClick="updateDogEntry(this.form)" class="btn btn-primary">Update Pet</button>
+      </div>
+      </form>
+    </div>
+  </div>
 
-
+  <div class="modal fade" id="updateCatEntry" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <form id="updateCatEntryForm">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title" id="myModalLabel">Update Cat Entry</h4>
+          </div>
+          <div class="modal-body">
+            <div class="form-group hidden">
+              <label>EntryID</label>
+              <input type="text" class="form-control" value="" name="entryID" id="entryID">
+            </div>
+            <div class="form-group">
+              <label>HomeDate</label>
+              <input type="text" class="form-control" value="" name="homeDate2" id="homeDate2" readonly="readonly" class="form-control clsDatePicker">
+            </div>
+            <div class="form-group">
+              <label>Package</label>
+              <input type="text" class="form-control" value="" name="package" id="package">
+            </div>
+            <div class="form-group">
+              <label>Extras</label>
+              <input type="text" class="form-control" value="" name="extras" id="extras">
+            </div>
+            <div class="form-group">
+              <label>CatIn</label>
+              <input type="text" class="form-control" value="" name="catIn" id="catIn">
+            </div>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <!-- <button type="submit" class="btn btn-primary">Add Pet</button> -->
+        <button type="submit" onClick="updateCatEntry(this.form)" class="btn btn-primary">Update Pet</button>
+      </div>
+      </form>
+    </div>
+  </div>
 
   <script>
     var myobject = {
     };
+
+    $(document).ready(function () {
+      $("#updateDogEntry").on('show.bs.modal', function (e) {
+        var EntryID = $(e.relatedTarget).data('entryid');
+        var HomeDate = $(e.relatedTarget).data('homedate');
+        var Package = $(e.relatedTarget).data('package');
+        var Extras = $(e.relatedTarget).data('extras');
+        var DogIn = $(e.relatedTarget).data('dogin');
+        $(e.currentTarget).find('input[name="entryID"]').val(EntryID);
+        $(e.currentTarget).find('input[name="homeDate"]').val(HomeDate);
+        $(e.currentTarget).find('input[name="package"]').val(Package);
+        $(e.currentTarget).find('input[name="extras"]').val(Extras);
+        $(e.currentTarget).find('input[name="dogIn"]').val(DogIn);
+      });
+      $("#updateCatEntry").on('show.bs.modal', function (e) {
+        var EntryID = $(e.relatedTarget).data('entryid');
+        var HomeDate = $(e.relatedTarget).data('homedate');
+        var Package = $(e.relatedTarget).data('package');
+        var Extras = $(e.relatedTarget).data('extras');
+        var CatIn = $(e.relatedTarget).data('catin');
+        $(e.currentTarget).find('input[name="entryID"]').val(EntryID);
+        $(e.currentTarget).find('input[name="homeDate2"]').val(HomeDate);
+        $(e.currentTarget).find('input[name="package"]').val(Package);
+        $(e.currentTarget).find('input[name="extras"]').val(Extras);
+        $(e.currentTarget).find('input[name="catIn"]').val(CatIn);
+      });
+    });
 
 
     $('#entryDate').datepicker({
@@ -216,7 +364,36 @@
           day = date.getDate(),
           month = date.getMonth() + 1,
           year = date.getFullYear();
-        alert(day + '-' + month + '-' + year);
+      }
+    });
+    $('#homeDate').datepicker({
+      dateFormat: 'yy-m-d',
+      inline: true,
+      onSelect: function (dateText, inst) {
+        var date = $(this).datepicker('getDate'),
+          day = date.getDate(),
+          month = date.getMonth() + 1,
+          year = date.getFullYear();
+      }
+    });
+    $('#entryDate2').datepicker({
+      dateFormat: 'yy-m-d',
+      inline: true,
+      onSelect: function (dateText, inst) {
+        var date = $(this).datepicker('getDate'),
+          day = date.getDate(),
+          month = date.getMonth() + 1,
+          year = date.getFullYear();
+      }
+    });
+    $('#homeDate2').datepicker({
+      dateFormat: 'yy-m-d',
+      inline: true,
+      onSelect: function (dateText, inst) {
+        var date = $(this).datepicker('getDate'),
+          day = date.getDate(),
+          month = date.getMonth() + 1,
+          year = date.getFullYear();
       }
     });
 
@@ -237,21 +414,43 @@
             var obj = { [rowHash.ID]: rowHash.name };
             $.extend(myobject, obj);
           }
-
           var select = document.getElementById("selectDog");
-
           for (index in myobject) {
             select.options[select.options.length] = new Option(myobject[index], index);
           }
         });
       });
+    }
 
+    function getCats() {
+      var cats = {};
+      fetch('http://web.engr.oregonstate.edu/~kokeshs/CatDog/CatDog.php?f=getCat', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }
+      }).then(function (res) {
+        res.json().then(function (data) {
+          myList = data.CatList;
+          for (var i = 0; i < myList.length; i++) {
+            var rowHash = myList[i];
+            var obj = { [rowHash.ID]: rowHash.name };
+            $.extend(myobject, obj);
+          }
+          var select = document.getElementById("selectCat");
+          for (index in myobject) {
+            select.options[select.options.length] = new Option(myobject[index], index);
+          }
+        });
+      });
     }
 
     function buildTables() {
       getDogEntries();
+      getCatEntries();
 
-      function addAllColumnHeaders(myList) {
+      function addAllDogColumnHeaders(myList) {
         var columnSet = [];
         var headerTr$ = $('<tr/>');
 
@@ -260,12 +459,41 @@
           for (var key in rowHash) {
             if ($.inArray(key, columnSet) == -1) {
               columnSet.push(key);
-              headerTr$.append($('<th/>').html(key));
+              if (key == "EntryID") {
+                headerTr$.append($('<style = "display:none;" th/>').html(key));
+              }
+              else {
+                headerTr$.append($('<th/>').html(key));
+              }
             }
           }
         }
         headerTr$.append($('<th/>'));
         $("#dogEntryList").append(headerTr$);
+
+        return columnSet;
+      }
+
+      function addAllCatColumnHeaders(myList) {
+        var columnSet = [];
+        var headerTr$ = $('<tr/>');
+
+        for (var i = 0; i < myList.length; i++) {
+          var rowHash = myList[i];
+          for (var key in rowHash) {
+            if ($.inArray(key, columnSet) == -1) {
+              columnSet.push(key);
+              if (key == "EntryID") {
+                headerTr$.append($('<style = "display:none;" th/>').html(key));
+              }
+              else {
+                headerTr$.append($('<th/>').html(key));
+              }
+            }
+          }
+        }
+        headerTr$.append($('<th/>'));
+        $("#catEntryList").append(headerTr$);
 
         return columnSet;
       }
@@ -282,25 +510,161 @@
           res.json().then(function (data) {
             myList = data.dogEntryList;
 
-            var columns = addAllColumnHeaders(myList);
+            var columns = addAllDogColumnHeaders(myList);
 
             for (var i = 0; i < myList.length; i++) {
               var row$ = $('<tr/>');
-              // var firstname;
-              // var lastname;
-              // var employeeid;
+              var entryID;
+              var homeDate;
+              var package;
+              var extras;
+              var dogIn;
               for (var colIndex = 0; colIndex < columns.length; colIndex++) {
                 var cellValue = myList[i][columns[colIndex]];
 
                 if (cellValue == null) { cellValue = ""; }
-                row$.append($('<td/>').html(cellValue));
+                if (colIndex == 0) {
+                  entryID = myList[i][columns[colIndex]];
+                  row$.append($('<style = "display:none;" td/>').html(cellValue));
+                }
+                if (colIndex == 1) {
+                  homeDate = myList[i][columns[colIndex]];
+                  row$.append($('<td/>').html(cellValue));
+                }
+                if (colIndex == 2) {
+                  package = myList[i][columns[colIndex]];
+                  row$.append($('<td/>').html(cellValue));
+                }
+                if (colIndex == 3) {
+                  extras = myList[i][columns[colIndex]];
+                  row$.append($('<td/>').html(cellValue));
+                }
+                if (colIndex == 4) {
+                  dogIn = myList[i][columns[colIndex]];
+                  row$.append($('<td/>').html(cellValue));
+                }
               }
-              //row$.append($('<a class="btn btn-default open-updateAnimal" data-toggle="modal" data-firstname="' + firstname + '" data-lastname="' + lastname + '" data-employeeid="' + employeeid + '" href="#updateEmployee" >Edit</a> <a class="btn btn-danger" href="#">Delete</a>'));
+              row$.append($('<a class="btn btn-default open-updateAnimal" data-toggle="modal" data-entryid="' + entryID + '" data-homedate="' + homeDate + '" data-package="' + package + '" data-extras="' + extras + '" data-dogin="' + dogIn + '" href="#updateDogEntry" >Edit</a> <a class="btn btn-danger" onclick="deleteDogEntry(' + entryID + ')">Delete</a>'));
               $("#dogEntryList").append(row$);
             }
           });
         });
       }
+
+      function getCatEntries() {
+        var temp = 0;
+        fetch('http://web.engr.oregonstate.edu/~kokeshs/CatDog/CatDog.php?f=getCatGuestListEntry', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          }
+        }).then(function (res) {
+          res.json().then(function (data) {
+            myList = data.catEntryList;
+
+            var columns = addAllCatColumnHeaders(myList);
+
+            for (var i = 0; i < myList.length; i++) {
+              var row$ = $('<tr/>');
+              var entryID;
+              var homeDate;
+              var package;
+              var extras;
+              var catIn;
+              for (var colIndex = 0; colIndex < columns.length; colIndex++) {
+                var cellValue = myList[i][columns[colIndex]];
+
+                if (cellValue == null) { cellValue = ""; }
+                if (colIndex == 0) {
+                  entryID = myList[i][columns[colIndex]];
+                  row$.append($('<style = "display:none;" td/>').html(cellValue));
+                }
+                if (colIndex == 1) {
+                  homeDate = myList[i][columns[colIndex]];
+                  row$.append($('<td/>').html(cellValue));
+                }
+                if (colIndex == 2) {
+                  package = myList[i][columns[colIndex]];
+                  row$.append($('<td/>').html(cellValue));
+                }
+                if (colIndex == 3) {
+                  extras = myList[i][columns[colIndex]];
+                  row$.append($('<td/>').html(cellValue));
+                }
+                if (colIndex == 4) {
+                  catIn = myList[i][columns[colIndex]];
+                  row$.append($('<td/>').html(cellValue));
+                }
+              }
+              row$.append($('<a class="btn btn-default open-updateAnimal" data-toggle="modal" data-entryid="' + entryID + '" data-homedate="' + homeDate + '" data-package="' + package + '" data-extras="' + extras + '" data-catin="' + catIn + '" href="#updateCatEntry" >Edit</a> <a class="btn btn-danger" onclick="deleteCatEntry(' + entryID + ')">Delete</a>'));
+              $("#catEntryList").append(row$);
+            }
+          });
+        });
+      }
+    }
+
+    function updateDogEntry(form) {
+      var entryID = form.entryID.value;
+      var date = form.homeDate.value;
+      var homeDate = new Date(date);
+      var package = form.package.value;
+      var extras = form.extras.value;
+      var dogIn = form.dogIn.value;
+      fetch('http://web.engr.oregonstate.edu/~kokeshs/CatDog/CatDog.php?f=updateDogGuestListEntry', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          EntryID: entryID,
+          HomeDate: homeDate,
+          Package: package,
+          Extras: extras,
+          DogIn: dogIn
+        })
+      }).then(function (res) {
+        res.json().then(function (data) {
+          if (data.isValid = "valid") {
+            alert("Dog: " + petName + " updated");
+          } else {
+            alert("Could not update this dog");
+          }
+        });
+      });
+    }
+
+    function updateCatEntry(form) {
+      var entryID = form.entryID.value;
+      var date = form.homeDate2.value;
+      var homeDate = new Date(date);
+      var package = form.package.value;
+      var extras = form.extras.value;
+      var catIn = form.catIn.value;
+      fetch('http://web.engr.oregonstate.edu/~kokeshs/CatDog/CatDog.php?f=updateCatGuestListEntry', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          EntryID: entryID,
+          HomeDate: homeDate,
+          Package: package,
+          Extras: extras,
+          CatIn: catIn
+        })
+      }).then(function (res) {
+        res.json().then(function (data) {
+          if (data.isValid = "valid") {
+            alert("Cat: " + petName + " updated");
+          } else {
+            alert("Could not update this cat");
+          }
+        });
+      });
     }
 
     function createDogEntry(form) {
@@ -327,6 +691,73 @@
             alert("Dog: " + data.name + " added to Database");
           } else {
             alert("Could not add Dog to Database");
+          }
+        });
+      });
+    }
+
+    function createCatEntry(form) {
+      var date = form.entryDate2.value;
+      var newdate = new Date(date);
+      var catId = form.selectCat.value;
+      var package = form.package.value;
+      var extras = form.extras.value;
+      fetch('http://web.engr.oregonstate.edu/~kokeshs/CatDog/CatDog.php?f=createCatGuestListEntry', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          Date: newdate,
+          Package: package,
+          Extras: extras,
+          catId: catId,
+        })
+      }).then(function (res) {
+        res.json().then(function (data) {
+          if (data.isValid = "valid") {
+            alert("Cat: " + data.name + " added to Database");
+          } else {
+            alert("Could not add Dog to Database");
+          }
+        });
+      });
+    }
+
+    function deleteDogEntry(id){
+      fetch('http://web.engr.oregonstate.edu/~kokeshs/CatDog/CatDog.php?f=deleteDogGuestListEntry', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          EntryID: id,
+        })
+      }).then(function (res) {
+        res.json().then(function (data) {
+          if (data.isValid = "valid") {
+            location.reload();
+          }
+        });
+      });
+    }
+
+    function deleteCatEntry(id){
+      fetch('http://web.engr.oregonstate.edu/~kokeshs/CatDog/CatDog.php?f=deleteCatGuestListEntry', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          EntryID: id,
+        })
+      }).then(function (res) {
+        res.json().then(function (data) {
+          if (data.isValid = "valid") {
+            location.reload();
           }
         });
       });
