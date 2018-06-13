@@ -16,7 +16,7 @@
     />
 </head>
 
-<body onload="buildTables()">
+<body onload="buildTables(), buildBadges()">
 
     <nav class="navbar navbar-default">
         <div class="container">
@@ -101,19 +101,19 @@
                         </a>
                         <a href="pets.html" class="list-group-item">
                             <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Pets
-                            <span class="badge">12</span>
+                            <span id="animalCountBadge" class="badge"></span>
                         </a>
                         <a href="employees.html" class="list-group-item">
                             <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Employees
-                            <span class="badge">33</span>
+                            <span id="employeeCountBadge" class="badge"></span>
                         </a>
                         <a href="entries.html" class="list-group-item">
                             <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Entries
-                            <span class="badge">33</span>
+                            <span class="badge" id="entryCountBadge"></span>
                         </a>
                         <a href="activities.html" class="list-group-item">
                             <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Activities
-                            <span class="badge">33</span>
+                            <span class="badge" id="activityCountBadge"></span>
                         </a>
                         <a href="about.html" class="list-group-item">
                             <span class="glyphicon glyphicon-user" aria-hidden="true"></span> About </a>
@@ -122,14 +122,7 @@
                     <div class="well">
                         <h4>Hotel Space Used</h4>
                         <div class="progress">
-                            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-                                60%
-                            </div>
-                        </div>
-                        <h4>Employees Busy </h4>
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
-                                40%
+                            <div id="spaceUsed" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 20%;">
                             </div>
                         </div>
                     </div>
@@ -355,7 +348,7 @@
                             <label>Entry ID Cat</label>
                             <input type="text" class="form-control" value="" name="entryIDCat" id="entryIDCat">
                         </div>
-                        <div id="idForCatEntryIDPm" class="form-group">
+                        <div id="idForDogEntryIDPm" class="form-group">
                             <label>Entry ID Dog</label>
                             <input type="text" class="form-control" value="" name="entryIDDog" id="entryIDDog">
                         </div>
@@ -373,7 +366,7 @@
                         </div>
                         <div class="form-group">
                             <label>Date</label>
-                            <input type="text" value="" name="activityDateDog" id="activityDateDog" readonly="readonly" class="form-control clsDatePicker">
+                            <input type="text" value="" name="activityPmDate" id="activityPmDate" readonly="readonly" class="form-control clsDatePicker">
                         </div>
                         <div class="form-group hidden">
                             <label>Activity ID</label>
@@ -422,7 +415,7 @@
                         </div>
                         <div class="form-group">
                             <label>Date</label>
-                            <input type="text" value="" name="activityDateAm" id="activityDateAm" readonly="readonly" class="form-control clsDatePicker">
+                            <input type="text" value="" name="activityAmDate" id="activityAmDate" readonly="readonly" class="form-control clsDatePicker">
                         </div>
                         <div class="form-group hidden">
                             <label>Activity ID</label>
@@ -440,6 +433,82 @@
 
 
     <script>
+
+        function buildBadges() {
+            fetch('http://web.engr.oregonstate.edu/~kokeshs/CatDog/CatDog.php?f=getAnimalCount', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                }
+            }).then(function (res) {
+                res.json().then(function (data) {
+                    AnimalCountList = data.animalCountList;
+                    AnimalCount = AnimalCountList[0];
+                    document.getElementById('animalCountBadge').innerHTML = String(AnimalCount.animalCount);
+                });
+            });
+
+            fetch('http://web.engr.oregonstate.edu/~kokeshs/CatDog/CatDog.php?f=getEmployeeCount', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                }
+            }).then(function (res) {
+                res.json().then(function (data) {
+                    EmployeeCountList = data.employeeCountList;
+                    EmployeeCount = EmployeeCountList[0];
+                    document.getElementById('employeeCountBadge').innerHTML = String(EmployeeCount.employeeCount);
+                });
+            });
+
+            fetch('http://web.engr.oregonstate.edu/~kokeshs/CatDog/CatDog.php?f=getEntriesCount', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                }
+            }).then(function (res) {
+                res.json().then(function (data) {
+                    EntryCountList = data.entryCountList;
+                    EntryCount = EntryCountList[0];
+                    document.getElementById('entryCountBadge').innerHTML = String(EntryCount.entryCount);
+                });
+            });
+
+            fetch('http://web.engr.oregonstate.edu/~kokeshs/CatDog/CatDog.php?f=getActivityCount', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                }
+            }).then(function (res) {
+                res.json().then(function (data) {
+                    ActivityCountList = data.activityCountList;
+                    ActivityCount = ActivityCountList[0];
+                    document.getElementById('activityCountBadge').innerHTML = String(ActivityCount.activityCount);
+                });
+            });
+
+            fetch('http://web.engr.oregonstate.edu/~kokeshs/CatDog/CatDog.php?f=getOpenSpace', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                }
+            }).then(function (res) {
+                res.json().then(function (data) {
+                    OpenSpaceList = data.openSpaceList;
+                    OpenSpace = OpenSpaceList[0];
+                    valeur = 81 - OpenSpace.openSpace;
+
+                    $('.progress-bar').css('width', valeur + '%').attr('aria-valuenow', valeur);
+                });
+            });
+        }
+
+
         $(document).ready(function () {
             $("#updatePMActivity").on('show.bs.modal', function (e) {
                 var EntryIDCat = $(e.relatedTarget).data('entryidcat');
@@ -464,7 +533,7 @@
                 $(e.currentTarget).find('input[name="employeeID"]').val(EmployeeID);
                 $(e.currentTarget).find('input[name="type"]').val(Type);
                 $(e.currentTarget).find('input[name="hours"]').val(Hours);
-                $(e.currentTarget).find('input[name="activityDateDog"]').val(ActivityDate);
+                $(e.currentTarget).find('input[name="activityPmDate"]').val(ActivityDate);
                 $(e.currentTarget).find('input[name="activityID"]').val(ActivityID);
             });
 
@@ -492,7 +561,7 @@
                 $(e.currentTarget).find('input[name="employeeID"]').val(EmployeeID);
                 $(e.currentTarget).find('input[name="type"]').val(Type);
                 $(e.currentTarget).find('input[name="hours"]').val(Hours);
-                $(e.currentTarget).find('input[name="activityDateAm"]').val(ActivityDate);
+                $(e.currentTarget).find('input[name="activityAmDate"]').val(ActivityDate);
                 $(e.currentTarget).find('input[name="activityID"]').val(ActivityID);
 
             });
@@ -564,33 +633,6 @@
             }
         });
 
-        // function getDogs() {
-        //     var dogs = {};
-        //     fetch('http://web.engr.oregonstate.edu/~kokeshs/CatDog/CatDog.php?f=getDog', {
-        //         method: 'POST',
-        //         headers: {
-        //             'Accept': 'application/json',
-        //             'Content-Type': 'application/json',
-        //         }
-        //     }).then(function (res) {
-        //         res.json().then(function (data) {
-        //             myList = data.DogList;
-        //             for (var i = 0; i < myList.length; i++) {
-        //                 var rowHash = myList[i];
-        //                 var obj = { [rowHash.ID]: rowHash.name };
-        //                 $.extend(myobject, obj);
-        //             }
-
-        //             var select = document.getElementById("selectDog");
-
-        //             for (index in myobject) {
-        //                 select.options[select.options.length] = new Option(myobject[index], index);
-        //             }
-        //         });
-        //     });
-
-        // }
-
         function buildTables() {
             getPmActivity();
             getAmActivity();
@@ -604,7 +646,7 @@
                     for (var key in rowHash) {
                         if ($.inArray(key, columnSet) == -1) {
                             columnSet.push(key);
-                            if (key == "ActivityId") {
+                            if (key == "ActivityId" || key == "EntryIDCat" || key == "EntryIDDog" || key == "EmployeeID") {
                                 headerTr$.append($('<style = "display:none;" th/>').html(key));
                             }
                             else {
@@ -628,7 +670,7 @@
                     for (var key in rowHash) {
                         if ($.inArray(key, columnSet) == -1) {
                             columnSet.push(key);
-                            if (key == "ActivityId") {
+                            if (key == "ActivityId" || key == "EntryIDCat" || key == "EntryIDDog" || key == "EmployeeID") {
                                 headerTr$.append($('<style = "display:none;" th/>').html(key));
                             }
                             else {
@@ -669,15 +711,15 @@
                                 var cellValue = myList[i][columns[colIndex]];
                                 if (colIndex == 0) {
                                     entryIDCat = myList[i][columns[colIndex]];
-                                    row$.append($('<td/>').html(cellValue));
+                                    row$.append($('<style = "display:none;" td/>').html(cellValue));
                                 }
                                 if (colIndex == 1) {
                                     entryIDDog = myList[i][columns[colIndex]];
-                                    row$.append($('<td/>').html(cellValue));
+                                    row$.append($('<style = "display:none;" td/>').html(cellValue));
                                 }
                                 if (colIndex == 2) {
                                     employeeID = myList[i][columns[colIndex]];
-                                    row$.append($('<td/>').html(cellValue));
+                                    row$.append($('<style = "display:none;" td/>').html(cellValue));
                                 }
                                 if (colIndex == 3) {
                                     type = myList[i][columns[colIndex]];
@@ -694,6 +736,15 @@
                                 if (colIndex == 6) {
                                     activityID = myList[i][columns[colIndex]];
                                     row$.append($('<style = "display:none;" td/>').html(cellValue));
+                                }
+                                if (colIndex == 7) {
+                                    row$.append($('<td/>').html(cellValue));
+                                }
+                                if (colIndex == 8) {
+                                    row$.append($('<td/>').html(cellValue));
+                                }
+                                if (colIndex == 9) {
+                                    row$.append($('<td/>').html(cellValue));
                                 }
                             }
                             row$.append($('<a class="btn btn-default open-updateAnimal" data-toggle="modal" data-entryidcat="' + entryIDCat + '" data-entryiddog="' + entryIDDog + '" data-employeeid="' + employeeID + '" data-type="' + type + '" data-hours="' + hours + '" data-date="' + date + '" data-activityid="' + activityID + '" href="#updatePMActivity" >Edit</a> <a class="btn btn-danger" onclick="deletePmActivity(' + activityID + ')">Delete</a>'));
@@ -729,15 +780,15 @@
                                 var cellValue = myList[i][columns[colIndex]];
                                 if (colIndex == 0) {
                                     entryIDCat = myList[i][columns[colIndex]];
-                                    row$.append($('<td/>').html(cellValue));
+                                    row$.append($('<style = "display:none;" td/>').html(cellValue));
                                 }
                                 if (colIndex == 1) {
                                     entryIDDog = myList[i][columns[colIndex]];
-                                    row$.append($('<td/>').html(cellValue));
+                                    row$.append($('<style = "display:none;" td/>').html(cellValue));
                                 }
                                 if (colIndex == 2) {
                                     employeeID = myList[i][columns[colIndex]];
-                                    row$.append($('<td/>').html(cellValue));
+                                    row$.append($('<style = "display:none;" td/>').html(cellValue));
                                 }
                                 if (colIndex == 3) {
                                     type = myList[i][columns[colIndex]];
@@ -754,6 +805,15 @@
                                 if (colIndex == 6) {
                                     activityID = myList[i][columns[colIndex]];
                                     row$.append($('<style = "display:none;" td/>').html(cellValue));
+                                }
+                                if (colIndex == 7) {
+                                    row$.append($('<td/>').html(cellValue));
+                                }
+                                if (colIndex == 8) {
+                                    row$.append($('<td/>').html(cellValue));
+                                }
+                                if (colIndex == 9) {
+                                    row$.append($('<td/>').html(cellValue));
                                 }
                             }
                             row$.append($('<a class="btn btn-default open-updateAnimal" data-toggle="modal" data-entryidcat="' + entryIDCat + '" data-entryiddog="' + entryIDDog + '" data-employeeid="' + employeeID + '" data-type="' + type + '" data-hours="' + hours + '" data-date="' + date + '" data-activityid="' + activityID + '" href="#updateAMActivity" >Edit</a> <a class="btn btn-danger" onclick="deleteAmActivity(' + activityID + ')">Delete</a>'));
@@ -898,7 +958,7 @@
                 var employeeID = form.employeeID.value;
                 var type = form.type.value;
                 var hours = form.hours.value;
-                var activityDate = form.activityDatePmDog.value;
+                var activityDate = form.activityPmDate.value;
                 var newdate = new Date(activityDate);
                 var activityID = form.activityID.value;
                 fetch('http://web.engr.oregonstate.edu/~kokeshs/CatDog/CatDog.php?f=updateDogPMActivity', {
@@ -930,7 +990,7 @@
                 var employeeID = form.employeeID.value;
                 var type = form.type.value;
                 var hours = form.hours.value;
-                var activityDate = form.activityDatePmDog.value;
+                var activityDate = form.activityPmDate.value;
                 var newdate = new Date(activityDate);
                 var activityID = form.activityID.value;
                 fetch('http://web.engr.oregonstate.edu/~kokeshs/CatDog/CatDog.php?f=updateCatPmActivity', {
@@ -962,7 +1022,6 @@
         function updateAmActivityFunctionSelector(form) {
             //this is for updating a dogs am activity
             if ($.isNumeric(form.entryIDDog.value)) {
-                alert("we are a dog");
                 var entryIDDog = form.entryIDDog.value;
                 var employeeID = form.employeeID.value;
                 var type = form.type.value;
@@ -1046,7 +1105,7 @@
                 });
             });
         }
-        
+
         function deletePmActivity(id) {
             fetch('http://web.engr.oregonstate.edu/~kokeshs/CatDog/CatDog.php?f=deletePmActivity', {
                 method: 'POST',

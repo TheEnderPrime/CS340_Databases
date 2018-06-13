@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,9 +14,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"
   />
 </head>
-
-<body onload="buildTables(), getDogs(), getCats()">
-
+<body onload="buildTables(), getDogs(), getCats(), buildBadges()">
   <nav class="navbar navbar-default">
     <div class="container">
       <div class="navbar-header">
@@ -51,12 +48,7 @@
             <a href="about.html">About</a>
           </li>
         </ul>
-        <!-- <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Welcome, David</a></li>
-            <li><a href="login.html">Logout</a></li>
-          </ul> -->
       </div>
-      <!--/.nav-collapse -->
     </div>
   </nav>
 
@@ -100,19 +92,19 @@
             </a>
             <a href="pets.html" class="list-group-item">
               <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Pets
-              <span class="badge">12</span>
+              <span id="animalCountBadge" class="badge"></span>
             </a>
             <a href="employees.html" class="list-group-item">
               <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Employees
-              <span class="badge">33</span>
+              <span id="employeeCountBadge" class="badge"></span>
             </a>
             <a href="entries.html" class="list-group-item">
               <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Entries
-              <span class="badge">33</span>
+              <span class="badge" id="entryCountBadge"></span>
             </a>
             <a href="activities.html" class="list-group-item">
               <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Activities
-              <span class="badge">33</span>
+              <span class="badge" id="activityCountBadge"></span>
             </a>
             <a href="about.html" class="list-group-item">
               <span class="glyphicon glyphicon-user" aria-hidden="true"></span> About </a>
@@ -121,14 +113,7 @@
           <div class="well">
             <h4>Hotel Space Used</h4>
             <div class="progress">
-              <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-                60%
-              </div>
-            </div>
-            <h4>Employees Busy </h4>
-            <div class="progress">
-              <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
-                40%
+              <div id="spaceUsed" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 20%;">
               </div>
             </div>
           </div>
@@ -150,7 +135,6 @@
               </table>
             </div>
           </div>
-
         </div>
       </div>
     </div>
@@ -325,6 +309,80 @@
   </div>
 
   <script>
+    function buildBadges() {
+      fetch('http://web.engr.oregonstate.edu/~kokeshs/CatDog/CatDog.php?f=getAnimalCount', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }
+      }).then(function (res) {
+        res.json().then(function (data) {
+          AnimalCountList = data.animalCountList;
+          AnimalCount = AnimalCountList[0];
+          document.getElementById('animalCountBadge').innerHTML = String(AnimalCount.animalCount);
+        });
+      });
+
+      fetch('http://web.engr.oregonstate.edu/~kokeshs/CatDog/CatDog.php?f=getEmployeeCount', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }
+      }).then(function (res) {
+        res.json().then(function (data) {
+          EmployeeCountList = data.employeeCountList;
+          EmployeeCount = EmployeeCountList[0];
+          document.getElementById('employeeCountBadge').innerHTML = String(EmployeeCount.employeeCount);
+        });
+      });
+
+      fetch('http://web.engr.oregonstate.edu/~kokeshs/CatDog/CatDog.php?f=getEntriesCount', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }
+      }).then(function (res) {
+        res.json().then(function (data) {
+          EntryCountList = data.entryCountList;
+          EntryCount = EntryCountList[0];
+          document.getElementById('entryCountBadge').innerHTML = String(EntryCount.entryCount);
+        });
+      });
+
+      fetch('http://web.engr.oregonstate.edu/~kokeshs/CatDog/CatDog.php?f=getActivityCount', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }
+      }).then(function (res) {
+        res.json().then(function (data) {
+          ActivityCountList = data.activityCountList;
+          ActivityCount = ActivityCountList[0];
+          document.getElementById('activityCountBadge').innerHTML = String(ActivityCount.activityCount);
+        });
+      });
+
+      fetch('http://web.engr.oregonstate.edu/~kokeshs/CatDog/CatDog.php?f=getOpenSpace', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }
+      }).then(function (res) {
+        res.json().then(function (data) {
+          OpenSpaceList = data.openSpaceList;
+          OpenSpace = OpenSpaceList[0];
+          valeur = 81 - OpenSpace.openSpace;
+
+          $('.progress-bar').css('width', valeur + '%').attr('aria-valuenow', valeur);
+        });
+      });
+    }
+
     var myobject = {
     };
 
